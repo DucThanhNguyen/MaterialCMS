@@ -1,0 +1,31 @@
+﻿@using MaterialCMS.Apps
+@using MaterialCMS.Helpers
+@using MaterialCMS.Website
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutRoot.cshtml";
+}
+
+@{ Html.RenderPartial("Navbar"); }
+
+<div class="container-materialcms" style="padding-left: 0;">
+    <div class="main-content">
+        <div class="inner-content">
+            <section class="admin-header">
+                @{ Html.RenderPartial("Messages");}
+            </section>
+            @RenderBody()
+        </div>
+    </div>
+</div>
+<footer>
+    <hr />
+    <img src="/Areas/Admin/Content/Images/logo.png" class="display-inline" style="margin-left: 20px;" />
+    <p class="display-inline">
+        &copy; Material CMS 2012-@CurrentRequestData.Now.Year - v@(Html.AssemblyVersion()) - Installed apps: @MaterialCMSApp.CurrentAppSummary
+    </p>
+</footer>
+
+@if (IsSectionDefined("JavaScriptBlock"))
+{
+    DefineSection("JavaScriptBlock", () => Write(RenderSection("JavaScriptBlock")));
+}

@@ -1,0 +1,26 @@
+﻿using System;
+using System.Web.Helpers;
+using System.Web.Mvc;
+
+namespace MaterialCMS.Website.Filters
+{
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
+    public class AntiForgeryValidationAttribute : FilterAttribute, IAuthorizationFilter
+    {
+        public void OnAuthorization(AuthorizationContext filterContext)
+        {
+            if (filterContext == null)
+            {
+                throw new ArgumentNullException("filterContext");
+            }
+            try
+            {
+                AntiForgery.Validate();
+            }
+            catch 
+            {
+                filterContext.Result = new RedirectResult("~");
+            }
+        }
+    }
+}

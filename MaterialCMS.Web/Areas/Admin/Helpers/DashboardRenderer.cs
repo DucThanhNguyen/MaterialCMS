@@ -1,0 +1,29 @@
+﻿using System.Linq;
+using System.Web.Mvc;
+using System.Web.Mvc.Html;
+using MaterialCMS.Web.Areas.Admin.Models;
+using MaterialCMS.Website;
+
+namespace MaterialCMS.Web.Areas.Admin.Helpers
+{
+    public static class DashboardRenderer
+    {
+        public static MvcHtmlString RenderDashboardArea(this HtmlHelper htmlHelper, DashboardArea dashboardArea)
+        {
+            var actionMethodsWithAttribute =
+                MaterialCMSControllerFactory.GetActionMethodsWithAttribute<DashboardAreaAction>()
+                    .Where(info => info.Attribute.DashboardArea == dashboardArea);
+
+            return actionMethodsWithAttribute.OrderBy(info => info.Attribute.Order)
+                .Aggregate(MvcHtmlString.Empty,
+                    (current, actionMethodInfo) =>
+                        current.Concat(htmlHelper.Action(actionMethodInfo.Descriptor.ActionName,
+                            actionMethodInfo.Descriptor.ControllerDescriptor.ControllerName)));
+        }
+
+        public static MvcHtmlString Concat(this MvcHtmlString first, params MvcHtmlString[] strings)
+        {
+            return MvcHtmlString.Create(first + string.Concat(strings.Select(s => s.ToString())));
+        }
+    }
+}

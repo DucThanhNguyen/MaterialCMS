@@ -1,0 +1,4 @@
+﻿@model MaterialCMS.Web.Apps.Core.Widgets.LinkedImage 
+<a href="@Model.Link">
+    @RenderImage(Model.Image, attributes: new { @class = "img-responsive" })
+</a>

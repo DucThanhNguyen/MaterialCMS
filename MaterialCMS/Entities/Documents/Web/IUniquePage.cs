@@ -1,0 +1,11 @@
+﻿using System;
+
+namespace MaterialCMS.Entities.Documents.Web
+{
+    /// <summary>
+    /// A restricted webpage type that can only exist once in a site
+    /// </summary>
+    public interface IUniquePage
+    {
+    }
+}

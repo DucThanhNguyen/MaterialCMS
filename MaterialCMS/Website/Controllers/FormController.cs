@@ -1,0 +1,38 @@
+﻿using System.Linq;
+using System.Web.Mvc;
+using MaterialCMS.Entities.Documents.Web;
+using MaterialCMS.Services;
+
+namespace MaterialCMS.Website.Controllers
+{
+    public class FormController : MaterialCMSUIController
+    {
+        private readonly IDocumentService _documentService;
+        private readonly IFormPostingHandler _formPostingHandler;
+
+        public FormController(IDocumentService documentService, IFormPostingHandler formPostingHandler)
+        {
+            _documentService = documentService;
+            _formPostingHandler = formPostingHandler;
+        }
+
+        [ValidateInput(false)]
+        public ActionResult Save(int id)
+        {
+            var webpage = _documentService.GetDocument<Webpage>(id);
+            if (webpage.IsDeleted)
+                return new EmptyResult();
+            var saveFormData = _formPostingHandler.SaveFormData(webpage, Request);
+
+            TempData["form-submitted"] = true;
+            TempData["form-submitted-message"] = saveFormData;
+            // if any errors add form data to be renderered, otherwise form should be empty
+            TempData["form-data"] = saveFormData.Any() ? Request.Form : null;
+
+            var redirectUrl = Referrer.ToString();
+            if (!string.IsNullOrEmpty(webpage.FormRedirectUrl) && !saveFormData.Any())
+                redirectUrl = webpage.FormRedirectUrl;
+            return Redirect(redirectUrl);
+        }
+    }
+}

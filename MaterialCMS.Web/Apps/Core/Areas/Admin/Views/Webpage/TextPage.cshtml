@@ -1,0 +1,8 @@
+﻿@using MaterialCMS.Entities.Documents.Media
+@using MaterialCMS.Services
+@using MaterialCMS.Website
+@model MaterialCMS.Web.Apps.Core.Pages.TextPage
+<div class="form-group">
+    @Html.LabelFor(webpage => webpage.FeatureImage) <br />
+    @Html.TextBoxFor(webpage => webpage.FeatureImage, new { data_type = "media-selector" })
+</div>

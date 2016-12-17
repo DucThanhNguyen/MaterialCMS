@@ -1,0 +1,13 @@
+﻿@using MaterialCMS.Helpers
+@model MaterialCMS.Entities.Documents.Media.MediaCategory
+@if (Model != null)
+{
+    <div id="upload-anywhere">
+        @{ Html.RenderAction("Upload", "MediaCategory", new { category = Model }); }
+        <hr class="small-margin" />
+        @{ Html.RenderAction("ShowFilesSimple", "MediaCategory", new { category = Model }); }
+    </div>
+}
+@{
+    Html.IncludeScript("~/Areas/Admin/Content/Scripts/materialcms/media-show-files-simple.js");
+}

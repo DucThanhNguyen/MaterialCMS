@@ -1,0 +1,14 @@
+﻿@using MaterialCMS.Apps
+@using MaterialCMS.Helpers
+@using MaterialCMS.Website
+@model dynamic
+@{
+    ViewBag.Title = "About MaterialCMS";
+}
+<fieldset>
+    <legend>About</legend>
+    <p>&copy; Material CMS @CurrentRequestData.Now.Year - v@(Html.AssemblyVersion())</p>
+    <p>@Resource("Admin Logged in from", "Logged in from") @CurrentRequestData.CurrentContext.GetCurrentIP()</p>
+    <h4>@Resource("Admin Layout Installed apps", "Installed apps")</h4>
+    <p>@MaterialCMSApp.CurrentAppSummary</p>
+</fieldset>
